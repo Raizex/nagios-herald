@@ -1,4 +1,4 @@
-require 'chef/search/query'
+#require 'chef/search/query'
 
 module NagiosHerald
   module Helpers
@@ -17,20 +17,22 @@ module NagiosHerald
       # Still, I like having this example here.
       #
       # Returns true/false depending on whether a Chef knife config was loaded.
-      def load_knife_config
-        return @knife_config_loaded unless @knife_config_loaded.nil?
 
-        knife_config_file = Config.config['knife_config'] ? Config.config['knife_config'] : '~/.chef/knife.rb'
-        knife_config_file = File.expand_path(knife_config_file)
-        if !File.exist?(knife_config_file)
-          logger.warn("Knife config file not found (#{knife_config_file})")
-          @knife_config_loaded = false
-        else
-          Chef::Config.from_file(knife_config_file)
-          @knife_config_loaded = true
-        end
-        @knife_config_loaded
-      end
+## Removed to fix broken chef dependancy
+#      def load_knife_config
+#        return @knife_config_loaded unless @knife_config_loaded.nil?
+#
+#        knife_config_file = Config.config['knife_config'] ? Config.config['knife_config'] : '~/.chef/knife.rb'
+#        knife_config_file = File.expand_path(knife_config_file)
+#        if !File.exist?(knife_config_file)
+#          logger.warn("Knife config file not found (#{knife_config_file})")
+#          @knife_config_loaded = false
+#        else
+#          Chef::Config.from_file(knife_config_file)
+#          @knife_config_loaded = true
+#        end
+#        @knife_config_loaded
+#      end
 
       # Public: Get the Ganglia cluster name for a given host.
       # So, if you're still reading this *and* you use Chef,
@@ -40,13 +42,15 @@ module NagiosHerald
       # host - The name of the host whose Ganglia cluster name we need to look up.
       #
       # Returns the Ganglia cluster name for the host.
-      def get_cluster_name_for_host(host)
-        return nil unless load_knife_config
-        query = Chef::Search::Query.new
-        # we're only expecting a single node to be returned --> make sure it's the case!
-        chef_node = query.search('node', "fqdn:#{host}").first.first
-        chef_node.ganglia.cluster_name
-      end
+
+## Removed to fix broken chef dependancy
+#      def get_cluster_name_for_host(host)
+#        return nil unless load_knife_config
+#        query = Chef::Search::Query.new
+#        # we're only expecting a single node to be returned --> make sure it's the case!
+#        chef_node = query.search('node', "fqdn:#{host}").first.first
+#        chef_node.ganglia.cluster_name
+#      end
 
       # Public: Generate the URL required to download a graph of the require metric
       #
